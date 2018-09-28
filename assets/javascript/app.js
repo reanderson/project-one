@@ -9,6 +9,8 @@ var entryDisplayArea = $("#entryContent") // area where entry content is display
 // make an array of objects to hold all the journal entries
 var entries = []
 
+var currentEntry = false;
+
 // =======================================================================================
 // FUNCTIONS
 
@@ -49,6 +51,10 @@ function getEntryContent(entry) {
 
 }
 
+function addEntryText() {
+  // used when the 
+}
+
 // =======================================================================================
 // BUTTONS
 newEntryButton.on("click", function() {
@@ -80,8 +86,18 @@ newEntryButton.on("click", function() {
 $(document).on("click", ".entryBtn", function() {
   console.log(this);
   entryDisplayArea.empty();
+  currentEntry = parseInt($(this).attr("data-index"));
+  console.log(currentEntry)
   var entry = entries[parseInt($(this).attr("data-index"))]
   getEntryContent(entry);
+})
+
+$("#callNewTextModal").on("click", function() {
+  if (currentEntry === false) {
+    // don't do anything if there isn't a current entry selected
+    return false;
+  }
+  $("#newTextModal").modal('show')
 })
 
 //========================================================================================

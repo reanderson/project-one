@@ -22,7 +22,8 @@ function writeEntryButtons() {
   for (var i = 0; i < entries.length; i++) {
     // create a new button
     var newButton = $("<button>");
-    newButton.addClass("btn btn-block");
+    // class of entryBtn will be used for binding a click event
+    newButton.addClass("btn btn-block entryBtn");
 
     // set button to have an attribute of what index of the entries array it refers to
     // that way we can get the object out of the entries array later
@@ -33,6 +34,18 @@ function writeEntryButtons() {
 
     entryButtonsArea.append(newButton)
   }
+
+}
+
+function getEntryContent(entry) {
+  // argument is a journal entry object
+
+  // make the title display
+  var titleLine = $("<h3>")
+  titleLine.text(entry.title)
+  titleLine.addClass("")
+
+  entryDisplayArea.append(titleLine)
 
 }
 
@@ -50,6 +63,7 @@ newEntryButton.on("click", function() {
   // and an empty array for the content
   var newEntry = {
     title: title,
+    // probably include the date in here too
     content: []
   }
 
@@ -62,3 +76,13 @@ newEntryButton.on("click", function() {
 
   writeEntryButtons()
 })
+
+$(document).on("click", ".entryBtn", function() {
+  console.log(this);
+  entryDisplayArea.empty();
+  var entry = entries[parseInt($(this).attr("data-index"))]
+  getEntryContent(entry);
+})
+
+//========================================================================================
+// PAGE CONTENT

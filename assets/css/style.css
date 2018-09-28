@@ -1,0 +1,4 @@
+#entryContent {
+  /* This is needed in order to make line breaks typed into new text appear as new lines as opposed to just all mashing together. */
+  white-space: pre-wrap;
+}

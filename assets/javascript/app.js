@@ -49,10 +49,12 @@ function getEntryContent(entry) {
 
   entryDisplayArea.append(titleLine)
 
-}
+  // Go through the Content array
+  for (var i = 0; i < entry.content.length; i++) {
+    //write the content to the page
+    entryDisplayArea.append(entry.content[i])
+  }
 
-function addEntryText() {
-  // used when the 
 }
 
 // =======================================================================================
@@ -97,8 +99,36 @@ $("#callNewTextModal").on("click", function() {
     // don't do anything if there isn't a current entry selected
     return false;
   }
+  // Otherwise, bring up the modal
   $("#newTextModal").modal('show')
 })
+
+$("#submitNewText").on("click", function() {
+  var textInput = $("#newTextContent").val().trim();
+
+  if (textInput === "") {
+    // if there's no text, don't do anything
+    return false;
+  }
+
+  console.log(textInput)
+  var newText = $("<div>")
+
+  // entryText class for later adding the ability to edit
+  newText.addClass("entryText")
+
+  newText.text(textInput)
+
+    // clear the title entry field, close the modal, and update the entry buttons
+    $("#newTextContent").val("")
+    $("#newTextModal").modal('hide')
+
+  // Add the div to the current entry's content array
+  entries[currentEntry].content.push(newText)
+
+  // append the div to the page
+  entryDisplayArea.append(newText)
+}) 
 
 //========================================================================================
 // PAGE CONTENT

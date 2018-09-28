@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <title>Title</title>
+</head>
+
+<body>
+  <!-- This button triggers the New Entry Modal -->
+  <button type="button" class="btn btn-primary m-5" data-toggle="modal" data-target="#newEntryModal">
+    New Entry
+  </button>
+  <!-- End button for New Entry -->
+
+  <!-- New Entry Modal -->
+  <div class="modal fade" id="newEntryModal" tabindex="-1" role="dialog" aria-labelledby="newEntryModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newEntryModalTitle">Make a New Entry</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+  
+                  <label for="entry-title">Entry Title</label>
+                  <input type="text" class="form-control" id="entry-title" placeholder="Entry Title">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="submitNewEntry">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End New Entry Modal -->
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-4" id="entryButtons">
+
+      </div>
+      <div class="col-8" id="entryArea">
+        <div id="entryContentButtons">
+
+        </div>
+        <div id="entryContent">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/js/bootstrap.min.js"></script>
+  <script src="assets/javascript/app.js"></script>
+</body>
+
+</html>

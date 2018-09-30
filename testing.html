@@ -29,51 +29,92 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        <form>
         <div class="modal-body">
-  
-                  <label for="entry-title">Entry Title</label>
-                  <input type="text" class="form-control" id="entry-title" placeholder="Entry Title">
+
+          <label for="entry-title">Entry Title</label>
+          <input type="text" class="form-control" id="entry-title" placeholder="Entry Title">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="submitNewEntry">Save changes</button>
+          <button type="submit" class="btn btn-primary" id="submitNewEntry">Create Entry</button>
         </div>
+        </form>
       </div>
     </div>
   </div>
   <!-- End New Entry Modal -->
 
-    <!-- This button triggers the New Text Modal -->
-    <!-- <button type="button" class="btn btn-primary m-5" data-toggle="modal" data-target="#newTextModal"> -->
-        <button type="button" class="btn btn-primary m-5" id="callNewTextModal">
-        Add Text Content
-      </button>
-      <!-- End button for New Text -->
-    
-      <!-- New Text Modal -->
-      <div class="modal fade" id="newTextModal" tabindex="-1" role="dialog" aria-labelledby="newTextModalTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="newTextModalTitle">Add Text to Entry</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-      
-                      <label for="newTextContent">Enter Text Content</label>
-                      <textarea class="form-control" id="newTextContent" placeholder="Text" rows="5"></textarea>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="submitNewText">Add Text</button>
-            </div>
-          </div>
+  <!-- This button triggers the New Text Modal -->
+  <!-- <button type="button" class="btn btn-primary m-5" data-toggle="modal" data-target="#newTextModal"> -->
+  <button type="button" class="btn btn-primary m-5" id="callNewTextModal">
+    Add Text Content
+  </button>
+  <!-- End button for New Text -->
+
+  <!-- New Text Modal -->
+  <div class="modal fade" id="newTextModal" tabindex="-1" role="dialog" aria-labelledby="newTextModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newTextModalTitle">Add Text to Entry</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <select class="custom-select" id="colorSelect">
+                <option selected>Select Font Color</option>
+                <option value="black">Black</option>
+                <option value="green">Green</option>
+                <option value="blue">Blue</option>
+              </select>
+
+          <label for="newTextContent">Enter Text Content</label>
+          <textarea class="form-control" id="newTextContent" placeholder="Text" rows="5"></textarea>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="submitNewText">Add Text</button>
         </div>
       </div>
-      <!-- End New Text Modal -->
+    </div>
+  </div>
+  <!-- End New Text Modal -->
+
+  <!-- Edit Text Modal -->
+  <div class="modal fade" id="editTextModal" tabindex="-1" role="dialog" aria-labelledby="editTextModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editTextModalTitle">Text Content Options</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="editTextOptions">
+          
+          <select class="custom-select" id="colorChangeSelect">
+              <option selected>Select New Font Color</option>
+              <option value="black">Black</option>
+              <option value="green">Green</option>
+              <option value="blue">Blue</option>
+            </select>
+          
+
+          <label for="contentText">Edit Text</label>
+          <textarea class="form-control" id="contentText" placeholder="Text" rows="5"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="closeEditModal">Close</button>
+          <button type="button" class="btn btn-primary" id="saveEdits">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Edit Text Modal -->
 
   <div class="container-fluid">
     <div class="row">

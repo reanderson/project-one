@@ -9,7 +9,19 @@ var entryDisplayArea = $("#entryContent") // area where entry content is display
 // make an array of objects to hold all the journal entries
 var entries = []
 
+if(!localStorage.getItem("userEntries")) {
+  localStorage.setItem("userEntries", JSON.stringify(entries))
+} else {
+  entries = JSON.parse(localStorage.getItem("userEntries"))
+}
+
+console.log(localStorage.getItem("userEntries"))
+console.log(JSON.stringify(entries))
+console.log(JSON.parse(localStorage.getItem("userEntries")))
+writeEntryButtons()
+
 var currentEntry = false;
+var currentItem = false;
 
 // =======================================================================================
 // FUNCTIONS
@@ -42,6 +54,9 @@ function writeEntryButtons() {
 function getEntryContent(entry) {
   // argument is a journal entry object
 
+  // empty the display area
+  entryDisplayArea.empty();
+
   // make the title display
   var titleLine = $("<h3>")
   titleLine.text(entry.title)
@@ -51,10 +66,43 @@ function getEntryContent(entry) {
 
   // Go through the Content array
   for (var i = 0; i < entry.content.length; i++) {
-    //write the content to the page
-    entryDisplayArea.append(entry.content[i])
+    // check this content's type
+    if(entry.content[i].type === "text") {
+      // if it's text, then run the writeText function
+      writeText(entry.content[i], i)
+    }
   }
 
+}
+
+
+// The following functions are for writing different types of entry content:
+
+function writeText(obj, index) {
+  // takes a text content object and an index integer
+  // writes that object as a div to the page
+
+  // Prepare the new text for inputting to the page
+  var newTextDisplay = $("<div>")
+
+  // entryText class for later adding the ability to edit
+  newTextDisplay.addClass("entryText")
+
+  // add text to div
+  newTextDisplay.text(obj.content)
+
+  // add a data-index attribute to be able to find where in the contents array this text item was later
+  newTextDisplay.attr("data-index", index)
+
+  // check for text color information
+  if(obj.color) {
+    newTextDisplay.addClass(obj.color)
+
+    newTextDisplay.attr("data-color", obj.color)
+  }
+
+  // append the div to the page
+  entryDisplayArea.append(newTextDisplay)
 }
 
 // =======================================================================================
@@ -77,6 +125,8 @@ newEntryButton.on("click", function() {
 
   // add the new entry to the entries array
   entries.push(newEntry)
+  localStorage.setItem("userEntries", JSON.stringify(entries))
+  console.log(localStorage.getItem("userEntries"))
 
   // clear the title entry field, close the modal, and update the entry buttons
   $("#entry-title").val("")
@@ -85,14 +135,66 @@ newEntryButton.on("click", function() {
   writeEntryButtons()
 })
 
-$(document).on("click", ".entryBtn", function() {
-  console.log(this);
-  entryDisplayArea.empty();
-  currentEntry = parseInt($(this).attr("data-index"));
-  console.log(currentEntry)
-  var entry = entries[parseInt($(this).attr("data-index"))]
+
+$("#submitNewText").on("click", function() {
+  var textInput = $("#newTextContent").val().trim();
+
+  if (textInput === "") {
+    // if there's no text, don't do anything
+    return false;
+  }
+
+  // make a new empty object to contain this content item's data
+  var contentInfo = {}
+
+  // set key-value pairs for this content
+  contentInfo.type = "text";
+  contentInfo.content = textInput;
+
+  if($("#colorSelect").val()) {
+  contentInfo.color = $("#colorSelect").val();
+  }
+  // contentInfo.font = "";
+
+  writeText(contentInfo, entries[currentEntry].content.length)
+    
+  // Add the object to the current entry's content array
+  entries[currentEntry].content.push(contentInfo)
+  console.log(entries)
+  console.log(JSON.stringify(entries))
+  localStorage.setItem("userEntries", JSON.stringify(entries))
+
+
+  console.log(textInput)
+
+  // reset entry fields, close the modal
+  $("#newTextContent").val("")
+  $("#colorSelect").val("Select Font Color")
+  $("#newTextModal").modal('hide')
+}) 
+
+$("#saveEdits").on("click", function() {
+  var currentContent = entries[currentEntry].content[currentItem]
+  console.log("Hmm")
+  console.log(currentContent)
+
+  if ($("#contentText").val().trim() === "") {
+    // if there's no text, don't do anything
+    return false;
+  }
+  currentContent.content = $("#contentText").val().trim()
+  console.log(currentContent.content)
+  currentContent.color = $("#colorChangeSelect").val()
+
+  var entry = entries[currentEntry]
   getEntryContent(entry);
+
+  localStorage.setItem("userEntries", JSON.stringify(entries))
+  
+  $("#editTextModal").modal('hide')
+  currentItem = false
 })
+
 
 $("#callNewTextModal").on("click", function() {
   if (currentEntry === false) {
@@ -103,32 +205,28 @@ $("#callNewTextModal").on("click", function() {
   $("#newTextModal").modal('show')
 })
 
-$("#submitNewText").on("click", function() {
-  var textInput = $("#newTextContent").val().trim();
 
-  if (textInput === "") {
-    // if there's no text, don't do anything
-    return false;
-  }
+$(document).on("click", ".entryBtn", function() {
+  console.log(this);
+  currentEntry = parseInt($(this).attr("data-index"));
+  console.log(currentEntry)
+  var entry = entries[currentEntry]
+  getEntryContent(entry);
+})
 
-  console.log(textInput)
-  var newText = $("<div>")
+$(document).on("click", ".entryText", function() {
+  $("#editTextModal").modal('show')
+  console.log(this)
+  currentItem = ($(this).attr("data-index"))
 
-  // entryText class for later adding the ability to edit
-  newText.addClass("entryText")
+  $("#contentText").text($(this).text())
 
-  newText.text(textInput)
+ 
+  
 
-    // clear the title entry field, close the modal, and update the entry buttons
-    $("#newTextContent").val("")
-    $("#newTextModal").modal('hide')
+})
 
-  // Add the div to the current entry's content array
-  entries[currentEntry].content.push(newText)
-
-  // append the div to the page
-  entryDisplayArea.append(newText)
-}) 
-
-//========================================================================================
-// PAGE CONTENT
+$("#closeEditModal").on("click", function(){
+  $("#editTextModal").modal('hide')
+  currentItem = false
+})

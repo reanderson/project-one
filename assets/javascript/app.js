@@ -9,7 +9,7 @@ var entryDisplayArea = $("#entryContent") // area where entry content is display
 // make an array of objects to hold all the journal entries
 var entries = []
 
-if(!localStorage.getItem("userEntries")) {
+if (!localStorage.getItem("userEntries")) {
   localStorage.setItem("userEntries", JSON.stringify(entries))
 } else {
   entries = JSON.parse(localStorage.getItem("userEntries"))
@@ -75,16 +75,22 @@ function getEntryContent(entry) {
   // make the title display
   var titleLine = $("<h3>")
   titleLine.text(entry.title)
-  titleLine.addClass("")
+  titleLine.addClass("entryTitle")
 
   entryDisplayArea.append(titleLine)
 
   // Go through the Content array
   for (var i = 0; i < entry.content.length; i++) {
     // check this content's type
-    if(entry.content[i].type === "text") {
+    if (entry.content[i].type === "text") {
       // if it's text, then run the writeText function
       writeText(entry.content[i], i)
+    } else if (entry.content[i].type === "divider") {
+      // if a divider, just write a divider in
+      var divider = $("<hr>")
+      divider.addClass("contentDivider")
+      divider.attr("data-index", i)
+      entryDisplayArea.append(divider)
     }
   }
 
@@ -118,7 +124,7 @@ function writeText(obj, index) {
   var newTextDisplay = $("<div>")
 
   // entryText class for later adding the ability to edit
-  newTextDisplay.addClass("entryText")
+  newTextDisplay.addClass("entryText my-2")
 
   // add text to div
   newTextDisplay.text(obj.content)
@@ -127,10 +133,14 @@ function writeText(obj, index) {
   newTextDisplay.attr("data-index", index)
 
   // check for text color information
-  if(obj.color) {
+  if (obj.color) {
     newTextDisplay.addClass(obj.color)
 
-    newTextDisplay.attr("data-color", obj.color)
+    // newTextDisplay.attr("data-color", obj.color)
+  }
+
+  if (obj.align) {
+    newTextDisplay.addClass("text-"+obj.align)
   }
 
   // append the div to the page
@@ -139,7 +149,8 @@ function writeText(obj, index) {
 
 // =======================================================================================
 // BUTTONS
-newEntryButton.on("click", function() {
+newEntryButton.on("click", function (event) {
+  event.preventDefault()
   var title = $("#entry-title").val().trim()
 
   // check if a title has been entered
@@ -168,7 +179,7 @@ newEntryButton.on("click", function() {
 })
 
 
-$("#submitNewText").on("click", function() {
+$("#submitNewText").on("click", function () {
   var textInput = $("#newTextContent").val().trim();
 
   if (textInput === "") {
@@ -183,13 +194,17 @@ $("#submitNewText").on("click", function() {
   contentInfo.type = "text";
   contentInfo.content = textInput;
 
-  if($("#colorSelect").val()) {
-  contentInfo.color = $("#colorSelect").val();
+  if (!($("#colorSelect").val() === "Select Font Color")) {
+    contentInfo.color = $("#colorSelect").val();
   }
-  // contentInfo.font = "";
+
+  console.log($("#alignmentSelect").val())
+  if (!($("#alignmentSelect").val() === "Select Text Alignment")) {
+    contentInfo.align = $("#alignmentSelect").val()
+  }
 
   writeText(contentInfo, entries[currentEntry].content.length)
-    
+
   // Add the object to the current entry's content array
   entries[currentEntry].content.push(contentInfo)
   console.log(entries)
@@ -202,10 +217,11 @@ $("#submitNewText").on("click", function() {
   // reset entry fields, close the modal
   $("#newTextContent").val("")
   $("#colorSelect").val("Select Font Color")
+  $("#alignmentSelect").val("Select Text Alignment")
   $("#newTextModal").modal('hide')
-}) 
+})
 
-$("#saveEdits").on("click", function() {
+$("#saveEdits").on("click", function () {
   var currentContent = entries[currentEntry].content[currentItem]
   console.log("Hmm")
   console.log(currentContent)
@@ -216,19 +232,26 @@ $("#saveEdits").on("click", function() {
   }
   currentContent.content = $("#contentText").val().trim()
   console.log(currentContent.content)
-  currentContent.color = $("#colorChangeSelect").val()
+  if (!($("#colorChangeSelect").val() === "Select New Font Color")) {
+    currentContent.color = $("#colorChangeSelect").val()
+  }
+  if (!($("#alignmentChangeSelect").val() === "Select Text Alignment")) {
+    currentContent.align = $("#alignmentChangeSelect").val()
+    }
 
   var entry = entries[currentEntry]
   getEntryContent(entry);
 
   localStorage.setItem("userEntries", JSON.stringify(entries))
-  
+
+  $("#colorChangeSelect").val("Select New Font Color") 
+  $("#alignmentChangeSelect").val("Select Text Alignment")
   $("#editTextModal").modal('hide')
   currentItem = false
 })
 
 
-$("#callNewTextModal").on("click", function() {
+$("#callNewTextModal").on("click", function () {
   if (currentEntry === false) {
     // don't do anything if there isn't a current entry selected
     return false;
@@ -238,7 +261,7 @@ $("#callNewTextModal").on("click", function() {
 })
 
 
-$(document).on("click", ".entryBtn", function() {
+$(document).on("click", ".entryBtn", function () {
   console.log(this);
   currentEntry = $(this).attr("data-index");
   console.log(currentEntry)
@@ -246,7 +269,7 @@ $(document).on("click", ".entryBtn", function() {
   getEntryContent(entry);
 })
 
-$(document).on("click", ".entryText", function() {
+$(document).on("click", ".entryText", function () {
   $("#editTextModal").modal('show')
   console.log(this)
   currentItem = ($(this).attr("data-index"))
@@ -254,33 +277,33 @@ $(document).on("click", ".entryText", function() {
   $("#contentText").text($(this).text())
 })
 
-$(document).on("click", ".entryDelete", function() {
+$(document).on("click", ".entryDelete", function () {
   console.log(this)
   $("#deleteEntryModal").modal('show')
   entrySelect = $(this).attr("data-index")
   $("#titleToDelete").text(entries[entrySelect].title)
 })
 
-$("#closeEditModal").on("click", function(){
+$("#closeEditModal").on("click", function () {
   $("#editTextModal").modal('hide')
   currentItem = false
 })
 
-$(".deleteBtn").on("click", function() {
+$(".deleteBtn").on("click", function () {
   deleteContent();
   $("#editTextModal").modal('hide')
   currentItem = false
 })
 
-$("#doNotDeleteEntry").on("click", function() {
+$("#doNotDeleteEntry").on("click", function () {
   entrySelect = false;
   $("#deleteEntryModal").modal('hide')
 })
 
-$("#deleteEntry").on("click", function() {
+$("#deleteEntry").on("click", function () {
   //remove the current entry from the entries array
   entries.splice(entrySelect, 1)
-  
+
   //save the change to local storage
   localStorage.setItem("userEntries", JSON.stringify(entries))
 
@@ -301,4 +324,64 @@ $("#deleteEntry").on("click", function() {
 
   //close the modal
   $("#deleteEntryModal").modal('hide')
+})
+
+$("#newDivider").on("click", function () {
+  //create a new object for the entry's contents array
+  var dividerObj = {}
+  dividerObj.type = "divider"
+
+  // create the divider (<hr>) to add to the content
+  var divider = $("<hr>")
+  divider.attr("data-index", entries[currentEntry].content.length)
+  divider.addClass("contentDivider")
+  entryDisplayArea.append(divider)
+
+  entries[currentEntry].content.push(dividerObj)
+  localStorage.setItem("userEntries", JSON.stringify(entries))
+})
+
+$(document).on("click", ".contentDivider", function () {
+  //open the delete modal
+  $("#deleteDividerModal").modal('show')
+
+  //set the current item to this item's data-index
+  currentItem = $(this).attr("data-index")
+})
+
+$("#doNotDeleteItem").on("click", function () {
+  $("#deleteDividerModal").modal('hide')
+
+  currentItem = false;
+})
+
+$("#deleteItem").on("click", function () {
+  deleteContent()
+
+  $("#deleteDividerModal").modal('hide')
+
+  currentItem = false;
+})
+
+$(document).on("click", ".entryTitle", function() {
+  $("#editTitleModal").modal('show')
+
+  $("#newTitleEntry").val($(this).text())
+})
+
+$("#submitNewTitle").on("click", function(event) {
+  event.preventDefault()
+  var newTitle = $("#newTitleEntry").val().trim()
+
+  if (newTitle === "") {
+    return false;
+  }
+
+  entries[currentEntry].title = newTitle
+
+  writeEntryButtons()
+  getEntryContent(entries[currentEntry])
+
+  localStorage.setItem("userEntries", JSON.stringify(entries))
+  $("#editTitleModal").modal('hide')
 })

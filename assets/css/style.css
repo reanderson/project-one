@@ -14,3 +14,8 @@
 .blue {
   color: blue;
 }
+
+.contentDivider {
+  border: 1px solid #555555;
+  opacity: 0.5;
+}

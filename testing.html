@@ -124,6 +124,35 @@
   </div>
   <!-- End Edit Text Modal -->
 
+  <!-- Delete Entry Modal -->
+  <div class="modal fade" id="deleteEntryModal" tabindex="-1" role="dialog" aria-labelledby="deleteEntryModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteEntryModalTitle">Delete This Entry?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete "<span id="titleToDelete"></span>"?
+        </div>
+        <div class="modal-body">
+          <div class="row justify-content-between">
+            <div class="col">
+              <button type="button" class="btn btn-danger" id="deleteEntry">Yes, delete this entry</button>
+            </div>
+            <div class="col text-right">
+              <button type="button" class="btn btn-primary" id="doNotDeleteEntry">No, keep this entry</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Delete Entry Modal -->
+
   <div class="container-fluid">
     <div class="row">
       <div class="col-4" id="entryButtons">

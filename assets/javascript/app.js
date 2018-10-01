@@ -20,8 +20,12 @@ console.log(JSON.stringify(entries))
 console.log(JSON.parse(localStorage.getItem("userEntries")))
 writeEntryButtons()
 
+//variables used to track which entry is active and which item is being modified
 var currentEntry = false;
 var currentItem = false;
+
+//variable used for other entry modifications, namely deletions
+var entrySelect = false;
 
 // =======================================================================================
 // FUNCTIONS
@@ -34,6 +38,10 @@ function writeEntryButtons() {
 
   //loop over the entries array
   for (var i = 0; i < entries.length; i++) {
+    // make a new container for the entry button and its delete button
+    var btnDiv = $("<div>")
+    btnDiv.addClass("btn-group btn-block")
+
     // create a new button
     var newButton = $("<button>");
     // class of entryBtn will be used for binding a click event
@@ -46,7 +54,14 @@ function writeEntryButtons() {
     // Set the button's text to be the entry's title
     newButton.text(entries[i].title)
 
-    entryButtonsArea.append(newButton)
+    // make the delete button
+    var delBtn = $("<button>")
+    delBtn.addClass("btn entryDelete")
+    delBtn.html("<i class='fas fa-trash-alt'></i>")
+    delBtn.attr("data-index", i)
+
+    btnDiv.append(newButton, delBtn)
+    entryButtonsArea.append(btnDiv)
   }
 
 }
@@ -81,7 +96,6 @@ function deleteContent() {
   // and currentEntry is set to the data-index value of the currently active entry
 
   var entry = entries[currentEntry]
-  var toDelete = entry.content[currentItem]
 
   // splice the content to be deleted from the entry's content
   entry.content.splice(currentItem, 1)
@@ -226,7 +240,7 @@ $("#callNewTextModal").on("click", function() {
 
 $(document).on("click", ".entryBtn", function() {
   console.log(this);
-  currentEntry = parseInt($(this).attr("data-index"));
+  currentEntry = $(this).attr("data-index");
   console.log(currentEntry)
   var entry = entries[currentEntry]
   getEntryContent(entry);
@@ -240,6 +254,13 @@ $(document).on("click", ".entryText", function() {
   $("#contentText").text($(this).text())
 })
 
+$(document).on("click", ".entryDelete", function() {
+  console.log(this)
+  $("#deleteEntryModal").modal('show')
+  entrySelect = $(this).attr("data-index")
+  $("#titleToDelete").text(entries[entrySelect].title)
+})
+
 $("#closeEditModal").on("click", function(){
   $("#editTextModal").modal('hide')
   currentItem = false
@@ -249,4 +270,35 @@ $(".deleteBtn").on("click", function() {
   deleteContent();
   $("#editTextModal").modal('hide')
   currentItem = false
+})
+
+$("#doNotDeleteEntry").on("click", function() {
+  entrySelect = false;
+  $("#deleteEntryModal").modal('hide')
+})
+
+$("#deleteEntry").on("click", function() {
+  //remove the current entry from the entries array
+  entries.splice(entrySelect, 1)
+  
+  //save the change to local storage
+  localStorage.setItem("userEntries", JSON.stringify(entries))
+
+  //rewrite entry buttons
+  writeEntryButtons()
+
+  if (entrySelect === currentEntry) {
+    // if the entry to be deleted is also the entry being displayed,
+
+    // empty out the display area,
+    entryDisplayArea.empty()
+
+    // and state that there is no current entry.
+    currentEntry = false;
+  }
+
+  entrySelect = false;
+
+  //close the modal
+  $("#deleteEntryModal").modal('hide')
 })

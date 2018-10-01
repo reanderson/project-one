@@ -38,6 +38,8 @@ function writeEntryButtons() {
 
   //loop over the entries array
   for (var i = 0; i < entries.length; i++) {
+    var btnLi = $("<li>")
+    btnLi.addClass("list-group-item")
     // make a new container for the entry button and its delete button
     var btnDiv = $("<div>")
     btnDiv.addClass("btn-group btn-block")
@@ -61,7 +63,8 @@ function writeEntryButtons() {
     delBtn.attr("data-index", i)
 
     btnDiv.append(newButton, delBtn)
-    entryButtonsArea.append(btnDiv)
+    btnLi.append(btnDiv)
+    entryButtonsArea.append(btnLi)
   }
 
 }
@@ -75,7 +78,7 @@ function getEntryContent(entry) {
   // make the title display
   var titleLine = $("<h3>")
   titleLine.text(entry.title)
-  titleLine.addClass("entryTitle")
+  titleLine.addClass("entryTitle text-center")
 
   entryDisplayArea.append(titleLine)
 

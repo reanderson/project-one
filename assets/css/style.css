@@ -7,12 +7,44 @@
   color: black;
 }
 
+.white {
+  color: white;
+}
+
+.grey {
+  color: grey;
+}
+
+.red {
+  color: red;
+}
+
+.orange {
+  color: orange;
+}
+
+.yellow {
+  color: yellow;
+}
+
 .green {
   color: green;
 }
 
 .blue {
   color: blue;
+}
+
+.purple {
+  color: purple;
+}
+
+.brown {
+  color: brown;
+}
+
+.pink {
+  color: pink;
 }
 
 .contentDivider {

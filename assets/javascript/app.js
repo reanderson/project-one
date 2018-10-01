@@ -75,6 +75,24 @@ function getEntryContent(entry) {
 
 }
 
+function deleteContent() {
+  // This function will be called when a button to delete an item is clicked.
+  // That means that currentItem should be set to the data-index value of a content item
+  // and currentEntry is set to the data-index value of the currently active entry
+
+  var entry = entries[currentEntry]
+  var toDelete = entry.content[currentItem]
+
+  // splice the content to be deleted from the entry's content
+  entry.content.splice(currentItem, 1)
+
+  // Save the removal locally
+  localStorage.setItem("userEntries", JSON.stringify(entries))
+
+  // rewrite the entry to the page, such that the deleted content should no longer exist
+  getEntryContent(entry)
+}
+
 
 // The following functions are for writing different types of entry content:
 
@@ -220,13 +238,15 @@ $(document).on("click", ".entryText", function() {
   currentItem = ($(this).attr("data-index"))
 
   $("#contentText").text($(this).text())
-
- 
-  
-
 })
 
 $("#closeEditModal").on("click", function(){
+  $("#editTextModal").modal('hide')
+  currentItem = false
+})
+
+$(".deleteBtn").on("click", function() {
+  deleteContent();
   $("#editTextModal").modal('hide')
   currentItem = false
 })

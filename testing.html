@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css">
+  <link rel="stylesheet" href="iziModal.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
   <title>Title</title>
 </head>
@@ -14,7 +15,7 @@
 <body>
   <!-- BUTTONS -->
   <!-- This button triggers the New Entry Modal -->
-  <button type="button" class="btn btn-primary m-5" data-toggle="modal" data-target="#newEntryModal">
+  <button type="button" class="btn btn-primary m-5" id="callNewEntryModal">
     New Entry
   </button>
   <!-- End button for New Entry -->
@@ -50,6 +51,7 @@
 
             <label for="entry-title">Entry Title</label>
             <input type="text" class="form-control" id="entry-title" placeholder="Entry Title">
+            <div class="text-danger small validation"></div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -89,6 +91,7 @@
 
             <label for="newTextContent">Enter Text Content</label>
             <textarea class="form-control" id="newTextContent" placeholder="Text" rows="5"></textarea>
+            <div class="text-danger small validation"></div>
           </form>
         </div>
         <div class="modal-footer">
@@ -130,6 +133,7 @@
 
           <label for="contentText">Edit Text</label>
           <textarea class="form-control" id="contentText" placeholder="Text" rows="5"></textarea>
+          <div class="text-danger small validation"></div>
         </div>
         <div class="modal-body">
           <div class="row justify-content-between">
@@ -221,6 +225,7 @@
 
             <label for="newTitleEntry">Entry Title</label>
             <input type="text" class="form-control" id="newTitleEntry" placeholder="Entry Title">
+            <div class="text-danger small validation"></div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -254,6 +259,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/js/bootstrap.min.js"></script>
+  <script src="iziModal.min.js" type="text/javascript"></script>
   <script src="assets/javascript/app.js"></script>
 </body>
 

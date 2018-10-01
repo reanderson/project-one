@@ -149,14 +149,21 @@ function writeText(obj, index) {
 
 // =======================================================================================
 // BUTTONS
+$("#callNewEntryModal").on("click", function() {
+  $(".validation").empty()
+  $("#newEntryModal").modal('show')
+})
+
 newEntryButton.on("click", function (event) {
   event.preventDefault()
   var title = $("#entry-title").val().trim()
 
   // check if a title has been entered
   if (title === "") {
+    $(".validation").text("Please enter a title")
     return false
   }
+  $(".validation").empty()
 
   // make a new object for this entry, with the entered title as the entry's title, 
   // and an empty array for the content
@@ -183,9 +190,10 @@ $("#submitNewText").on("click", function () {
   var textInput = $("#newTextContent").val().trim();
 
   if (textInput === "") {
-    // if there's no text, don't do anything
+    $(".validation").text("Please enter text")
     return false;
   }
+  $(".validation").empty()
 
   // make a new empty object to contain this content item's data
   var contentInfo = {}
@@ -227,9 +235,11 @@ $("#saveEdits").on("click", function () {
   console.log(currentContent)
 
   if ($("#contentText").val().trim() === "") {
-    // if there's no text, don't do anything
+    $(".validation").text("Please enter text")
     return false;
   }
+  $(".validation").empty()
+
   currentContent.content = $("#contentText").val().trim()
   console.log(currentContent.content)
   if (!($("#colorChangeSelect").val() === "Select New Font Color")) {
@@ -257,6 +267,7 @@ $("#callNewTextModal").on("click", function () {
     return false;
   }
   // Otherwise, bring up the modal
+  $(".validation").empty()
   $("#newTextModal").modal('show')
 })
 
@@ -270,6 +281,7 @@ $(document).on("click", ".entryBtn", function () {
 })
 
 $(document).on("click", ".entryText", function () {
+  $(".validation").empty()
   $("#editTextModal").modal('show')
   console.log(this)
   currentItem = ($(this).attr("data-index"))
@@ -364,6 +376,7 @@ $("#deleteItem").on("click", function () {
 })
 
 $(document).on("click", ".entryTitle", function() {
+  $(".validation").empty()
   $("#editTitleModal").modal('show')
 
   $("#newTitleEntry").val($(this).text())
@@ -374,8 +387,10 @@ $("#submitNewTitle").on("click", function(event) {
   var newTitle = $("#newTitleEntry").val().trim()
 
   if (newTitle === "") {
+    $(".validation").text("Please enter a title")
     return false;
   }
+  $(".validation").empty()
 
   entries[currentEntry].title = newTitle
 

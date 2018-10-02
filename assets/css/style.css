@@ -1,0 +1,33 @@
+
+body, html {
+  height: 100%;
+}
+
+body {
+  background: lightgray;
+}
+
+h1 {
+  font-family: 'Comfortaa', cursive;
+  font-size: 70px;
+}
+
+.hero-image {
+  
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://pixabay.com/get/eb3db50821f1063ed1584d05fb0938c9bd22ffd41cb2194596f8c87fa7/black-coffee-2847957_1280.jpg");
+
+  height: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.hero-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}

@@ -94,7 +94,10 @@ function getEntryContent(entry) {
       divider.addClass("contentDivider")
       divider.attr("data-index", i)
       entryDisplayArea.append(divider)
-    }
+    } 
+    // else if (entry.content[i].type === "sketch") {
+    //   writeSketch(entry.content[i], i)
+    // }
   }
 
 }
@@ -149,6 +152,21 @@ function writeText(obj, index) {
   // append the div to the page
   entryDisplayArea.append(newTextDisplay)
 }
+
+// function writeSketch (obj, index) {
+//   var image = obj.content;
+//   console.log(image)
+//   var img = document.createElement("img")
+//   img.src = image
+//   // img.onload = function() {
+//   //   window.URL.revokeObjectURL(this.src)
+//   // }
+//   img.classList.add("img-fluid")
+//   img.classList.add("sketch-img")
+//   img.setAttribute("data-index", index)
+
+//   $("#entryContent").append(img)
+// }
 
 // =======================================================================================
 // BUTTONS
@@ -364,6 +382,14 @@ $(document).on("click", ".contentDivider", function () {
   currentItem = $(this).attr("data-index")
 })
 
+$(document).on("click", ".contentSketch", function () {
+  //open the delete modal
+  $("#deleteDividerModal").modal('show')
+
+  //set the current item to this item's data-index
+  currentItem = $(this).attr("data-index")
+})
+
 $("#doNotDeleteItem").on("click", function () {
   $("#deleteDividerModal").modal('hide')
 
@@ -404,25 +430,43 @@ $("#submitNewTitle").on("click", function(event) {
   $("#editTitleModal").modal('hide')
 })
 
+// ============================================================================================
+// PAINTERRO
+var ptro = Painterro({
+  saveHandler: function (image, done) {
 
-
-  $(document).ready(function () {
-    var queryURL = "https://favqs.com/api/qotd"
-    
-    function loadquote(){
+  // var entryItem = {}
+  // entryItem.type = "sketch";
+  // entryItem.content = window.URL.createObjectURL(image.asBlob());
+  // console.log(image.asBlob())
+  // console.log(entryItem.content)
   
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-    }).then(function (response) {
-      console.log(response);
-       $("#dailyquote").html('"' + response.quote.body + '"<br/>' + response.quote.author)
-    })
+  var img = document.createElement("img")
+  img.src = window.URL.createObjectURL(image.asBlob())
+  img.onload = function() {
+    window.URL.revokeObjectURL(this.src)
   }
+  img.classList.add("img-fluid")
+  img.classList.add("contentSketch")
+  img.setAttribute("data-index", entries[currentEntry].content.length)
+  console.log(img)
 
-  $("#newQuote").on("click", function() {
-    loadquote()
-  })
-  loadquote()
-  })
+  // // Add the object to the current entry's content array
+  // entries[currentEntry].content.push(entryItem)
+  // console.log(entries)
+  // console.log(JSON.stringify(entries))
+  // localStorage.setItem("userEntries", JSON.stringify(entries))
 
+  $("#entryContent").append(img)
+  done(true);
+  }
+})
+
+function myFunction() {
+    if (currentEntry === false) {
+    // don't do anything if there isn't a current entry selected
+    return false;
+  }
+  ptro.show();
+  
+};

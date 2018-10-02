@@ -14,9 +14,20 @@
 <body>
 
   <div class="container">
-    <div class="jumbotron text-center display-1">Journaly Journal</div>
 
-    <nav class="navbar navbar-dark bg-dark">Stuff</nav>
+    <div class="jumbotron text-center display-1">Journaly Journal</div>
+    <div class="bg-dark text-light p-3">
+      <div class="row justify-content-between align-items-center">
+        <div class="col col-10">
+
+          <small class="mb-0" id="dailyquote"></small>
+
+        </div>
+        <div class="col col-2 text-right">
+          <button type="button" id="newQuote" class="btn btn-secondary btn-sm">Click for a daily qoute</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <br>
@@ -44,7 +55,7 @@
             <button type="button" class="btn btn-secondary" id="callNewTextModal">
               Add Text Content
             </button>
-            
+
             <button type-"button" class="btn btn-secondary" id="newDivider">Add Divider</button>
           </div>
           <div class="card-body" id="entryContent">

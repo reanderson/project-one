@@ -12,9 +12,14 @@ h1 {
   font-size: 70px;
 }
 
+#entryContent {
+  /* This is needed in order to make line breaks typed into new text appear as new lines as opposed to just all mashing together. */
+  white-space: pre-wrap;
+}
+
 .hero-image {
   
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://pixabay.com/get/eb3db50821f1063ed1584d05fb0938c9bd22ffd41cb2194596f8c87fa7/black-coffee-2847957_1280.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/assets/img/black-coffee-2847957_1920.jpg");
 
   height: 50%;
   background-position: center;
@@ -30,4 +35,54 @@ h1 {
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+}
+
+
+.black {
+  color: black;
+}
+
+.white {
+  color: white;
+}
+
+.grey {
+  color: grey;
+}
+
+.red {
+  color: red;
+}
+
+.orange {
+  color: orange;
+}
+
+.yellow {
+  color: yellow;
+}
+
+.green {
+  color: green;
+}
+
+.blue {
+  color: blue;
+}
+
+.purple {
+  color: purple;
+}
+
+.brown {
+  color: brown;
+}
+
+.pink {
+  color: pink;
+}
+
+.contentDivider {
+  border: 1px solid #555555;
+  opacity: 0.5;
 }

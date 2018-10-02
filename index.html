@@ -17,6 +17,9 @@
         <div class="hero-text">
           <h1>Journaly Journal</h1>
           <p>For whatever thoughts you're thinking</p>
+          <br>
+          <button class="btn btn-outline-info btn-lg" id="callNewEntryModal">New Entry
+            </button>
       
         </div>
       </div>
@@ -24,10 +27,9 @@
   
       
     <nav class="navbar navbar-dark bg-dark">
-      <span class="navbar-text">"Doing nothing is hard, you never know when you're done."
+      <span class="navbar-text align-center">"Doing nothing is hard, you never know when you're done."
       </span>
-      <button class="btn btn-outline-info btn-large " type="submit">New Entry
-      </button>
+      
       
     </nav>
 
@@ -37,32 +39,255 @@
     <div class="row">
         <div class="col-md-4">
           <div class="card">
-              <div class="card-header">
-                Featured
+              
+              <div class="btn-group-vertical">
+                
+              <button type-"button" class="btn btn-secondary" onclick="myFunction()">Sketch Pad
+              </button>
+              
+            </div>
+            <ul class="list-group list-group-flush" id="entryButtons">
+              <li class="list-group-item">Cras justo odio</li>
+              <li class="list-group-item">Dapibus ac facilisis in</li>
+              <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+            
               </div>
-              <ul class="list-group">
-                <li class="list-group-item">Cras justo odio</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Vestibulum at eros</li>
-              </ul>
           </div>
-        </div>
-
+        
+        
         <div class="col-md-8">
-          <nav class="navbar navbar-primary">
-            <button class="btn btn-info my-2 my-sm-0" type="submit" onclick="myFunction()">Sketch Pad
-            </button>
-          </nav>
-          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci nisi eum ipsam dignissimos sapiente iure ipsum consequuntur ducimus eius labore veritatis fugit culpa delectus quam assumenda, esse id facere! Iusto?</p>
+          <div class="card">
+            <div class="card-header">
+              <button type="button" class="btn btn-secondary" id="callNewTextModal">
+                Add Text Content
+              </button>
+              
+              <button type-"button" class="btn btn-secondary" id="newDivider">Add Divider</button>
+            </div>
+            <div class="card-body" id="entryContent">
         </div>
-
-        
-
-        
    </div>
   </main>
 
-  <footer></footer>
+  <!-- MODALS -->
+  <!-- New Entry Modal -->
+  <div class="modal fade" id="newEntryModal" tabindex="-1" role="dialog" aria-labelledby="newEntryModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newEntryModalTitle">Make a New Entry</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+
+            <label for="entry-title">Entry Title</label>
+            <input type="text" class="form-control" id="entry-title" placeholder="Entry Title">
+            <div class="text-danger small validation"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" id="submitNewEntry">Create Entry</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- End New Entry Modal -->
+
+  <!-- New Text Modal -->
+  <div class="modal fade" id="newTextModal" tabindex="-1" role="dialog" aria-labelledby="newTextModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newTextModalTitle">Add Text to Entry</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <select class="custom-select my-1" id="colorSelect">
+              <option selected>Select Font Color</option>
+              <option value="black">Black</option>
+              <option value="white">White</option>
+              <option value="grey">Grey</option>
+              <option value="red">Red</option>
+              <option value="orange">Orange</option>
+              <option value="yellow">Yellow</option>
+              <option value="green">Green</option>
+              <option value="blue">Blue</option>
+              <option value="purple">Purple</option>
+              <option value="brown">Brown</option>
+              <option value="pink">Pink</option>
+            </select>
+
+            <select class="custom-select my-1" id="alignmentSelect">
+              <option selected>Select Text Alignment</option>
+              <option value="left">Left</option>
+              <option value="center">Center</option>
+              <option value="right">Right</option>
+            </select>
+
+            <label for="newTextContent">Enter Text Content</label>
+            <textarea class="form-control" id="newTextContent" placeholder="Text" rows="5"></textarea>
+            <div class="text-danger small validation"></div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="submitNewText">Add Text</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End New Text Modal -->
+
+  <!-- Edit Text Modal -->
+  <div class="modal fade" id="editTextModal" tabindex="-1" role="dialog" aria-labelledby="editTextModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editTextModalTitle">Text Content Options</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="editTextOptions">
+
+          <select class="custom-select my-1" id="colorChangeSelect">
+            <option selected>Select New Font Color</option>
+            <option value="black">Black</option>
+            <option value="white">White</option>
+            <option value="grey">Grey</option>
+            <option value="red">Red</option>
+            <option value="orange">Orange</option>
+            <option value="yellow">Yellow</option>
+            <option value="green">Green</option>
+            <option value="blue">Blue</option>
+            <option value="purple">Purple</option>
+            <option value="brown">Brown</option>
+            <option value="pink">Pink</option>
+          </select>
+
+          <select class="custom-select my-1" id="alignmentChangeSelect">
+            <option selected>Select Text Alignment</option>
+            <option value="left">Left</option>
+            <option value="green">Center</option>
+            <option value="right">Right</option>
+          </select>
+
+
+          <label for="contentText">Edit Text</label>
+          <textarea class="form-control" id="contentText" placeholder="Text" rows="5"></textarea>
+          <div class="text-danger small validation"></div>
+        </div>
+        <div class="modal-body">
+          <div class="row justify-content-between">
+            <div class="col">
+              <button type="button" class="btn btn-danger deleteBtn">Delete Content</button>
+            </div>
+            <div class="col text-right">
+              <button type="button" class="btn btn-secondary" id="closeEditModal">Close</button>
+              <button type="button" class="btn btn-primary" id="saveEdits">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Edit Text Modal -->
+
+  <!-- Delete Entry Modal -->
+  <div class="modal fade" id="deleteEntryModal" tabindex="-1" role="dialog" aria-labelledby="deleteEntryModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteEntryModalTitle">Delete This Entry?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete "<span id="titleToDelete"></span>"?
+        </div>
+        <div class="modal-body">
+          <div class="row justify-content-between">
+            <div class="col">
+              <button type="button" class="btn btn-danger" id="deleteEntry">Yes, delete this entry</button>
+            </div>
+            <div class="col text-right">
+              <button type="button" class="btn btn-primary" id="doNotDeleteEntry">No, keep this entry</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Delete Entry Modal -->
+
+  <!-- Delete Divider (and other misc content?) Modal -->
+  <div class="modal fade" id="deleteDividerModal" tabindex="-1" role="dialog" aria-labelledby="deleteDividerModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteDividerModalTitle">Delete This Item?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete this item?
+        </div>
+        <div class="modal-body">
+          <div class="row justify-content-between">
+            <div class="col">
+              <button type="button" class="btn btn-danger" id="deleteItem">Yes, delete this</button>
+            </div>
+            <div class="col text-right">
+              <button type="button" class="btn btn-primary" id="doNotDeleteItem">No, keep this</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end delete divider modal -->
+
+  <!-- Edit Title Modal -->
+  <div class="modal fade" id="editTitleModal" tabindex="-1" role="dialog" aria-labelledby="editTitleModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editTitleModalTitle">Change Entry Title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+
+            <label for="newTitleEntry">Entry Title</label>
+            <input type="text" class="form-control" id="newTitleEntry" placeholder="Entry Title">
+            <div class="text-danger small validation"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" id="submitNewTitle">Change Title</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- End Edit Title Modal -->
         
 <script src="assets/painterro-0.2.68/wp/tags/0.2.21.1/painterro-0.2.21.min.js"></script>
 <script>
@@ -70,7 +295,23 @@
   Painterro().show();
   
 };
-
+var ptro = Painterro({
+  saveHandler: function (image, done) {
+    var formData = new FormData();
+    formData.append('image', image.asBlob());
+    // you can also pass suggested filename 
+    // formData.append('image', image.asBlob(), image.suggestedFileName());
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://127.0.0.1:5500//save-as-binary/', true);
+    xhr.onload = xhr.onerror = function () {
+      done(true);
+    };
+    xhr.send(formData);
+  }
+})
+  function myFunction() {
+      ptro.show();
+    }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>

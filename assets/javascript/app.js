@@ -11,7 +11,7 @@
       method: "GET"
     }).then(function (response) {
       console.log(response);
-       $("#dailyquote").html(response.quote.body + "<br/>" + response.quote.author)
+      $("#dailyquote").html('"' + response.quote.body + '"<br/>' + response.quote.author)
     })
   }
 

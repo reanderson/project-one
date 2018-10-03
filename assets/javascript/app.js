@@ -160,7 +160,7 @@ $(document).ready(function () {
     
     var newImageDisplay = $('<div>');
 
-    newImageDisplay.addClass("user-image my-2")
+    newImageDisplay.addClass("user-image my-2 text-center")
 
     newImageDisplay.html("<img src='" + obj.content + "'>")
 
@@ -531,7 +531,9 @@ function callAJAX() {
   }
     
 // When the search button is clicked, capture value from input and apply to search URL
-$("#searchButton").on("click", function() {
+$("#searchButton").on("click", function(event) {
+  event.preventDefault()
+
   if (currentEntry === false) {
     // don't do anything if there isn't a current entry selected
     return false;

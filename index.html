@@ -67,18 +67,24 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header bg-secondary">
-            <button type="button" class="btn btn-outline-light shadow" id="callNewTextModal">
-              Add Text Content
-            </button>
 
-            <button type="button" class="btn btn-outline-light shadow" id="newDivider">Add Divider</button>
 
-            <button type="button" class="btn btn-outline-light shadow" id="searchButton" data-toggle="modal" data-target=".bd-example-modal-lg">Search
-              Image</button>
 
-            <form>
+
+            <form class="form-inline">
               <div class="form-group mt-2">
-                <input type="email" class="form-control" id="search-input" aria-describedby="emailHelp" placeholder="Search for a GIF">
+                <button type="button" class="btn btn-outline-light shadow mx-1" id="callNewTextModal">
+                  Add Text Content
+                </button>
+
+                <button type="button" class="btn btn-outline-light shadow mx-1" id="newDivider">Add Divider</button>
+
+
+
+                <input type="text" class="form-control mx-1" id="search-input" placeholder="Search for a GIF">
+
+                <button type="submit" class="btn btn-outline-light shadow mx-1" id="searchButton" data-toggle="modal"  data-target=".bd-example-modal-lg">Search
+                    Image</button>
               </div>
             </form>
 

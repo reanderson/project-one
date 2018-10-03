@@ -449,7 +449,7 @@ $(document).ready(function () {
     }
   })
 
-  function myFunction() {
+  function openSketch() {
     if (currentEntry === false) {
       // don't do anything if there isn't a current entry selected
       return false;
@@ -457,6 +457,10 @@ $(document).ready(function () {
     ptro.show();
 
   };
+
+  $("#callSketch").on("click", function() {
+    openSketch()
+  })
 
 
   //=========================================================================================

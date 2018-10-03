@@ -4,7 +4,7 @@ body, html {
 }
 
 body {
-  background: lightgray;
+  background: rgb(177, 168, 149);
 }
 
 h1 {
@@ -15,6 +15,10 @@ h1 {
 #entryContent {
   /* This is needed in order to make line breaks typed into new text appear as new lines as opposed to just all mashing together. */
   white-space: pre-wrap;
+}
+
+#dailyquote {
+  font-family: 'Vollkorn', serif;
 }
 
 .hero-image {

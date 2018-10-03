@@ -95,6 +95,8 @@ $(document).ready(function () {
         divider.addClass("contentDivider")
         divider.attr("data-index", i)
         entryDisplayArea.append(divider)
+      } else if (entry.content[i].type === "image") {
+        writeImage(entry.content[i], i)
       }
       // else if (entry.content[i].type === "sketch") {
       //   writeSketch(entry.content[i], i)
@@ -152,6 +154,19 @@ $(document).ready(function () {
 
     // append the div to the page
     entryDisplayArea.append(newTextDisplay)
+  }
+
+  function writeImage(obj, index) {
+    
+    var newImageDisplay = $('<div>');
+
+    newImageDisplay.addClass("user-image my-2 text-center")
+
+    newImageDisplay.html("<img src='" + obj.content + "'>")
+
+    newImageDisplay.attr("data-index", index)
+
+    entryDisplayArea.append(newImageDisplay)
   }
 
 
@@ -446,7 +461,7 @@ $(document).ready(function () {
 
   };
 
-  $("#callSketch").on("click", function() {
+  $("#callSketch").on("click", function () {
     openSketch()
   })
 
@@ -470,4 +485,92 @@ $(document).ready(function () {
     loadquote()
   })
   loadquote()
+
+  //=========================================================================================
+
+  var giphyURL = "https://api.giphy.com/v1/gifs/search?api_key=kkzMtZFNL89O59jUhznHYsIQkDOmoepZ&q="; //GIPHY URL and API key
+var giphyParameters = "&limit=15&offset=0&rating=Y&lang=en"; //Parameters for gif search
+var userSearchURL = ""; //Complete link to API data
+var searchTerm = ""; //Variable that stores the user searach request
+var userSelection = ""; //Variable that stores the GIF URL of the slected image
+
+// Function to capture user input from search query
+function userSearch() {
+  searchTerm = $("#search-input").val();
+  searchTerm + "'";
+  searchTerm = searchTerm.trim().toLowerCase();
+  console.log("User Search: " + searchTerm);
+  userSearchURL = giphyURL + searchTerm + giphyParameters;
+}
+
+// AJAX function to call API
+function callAJAX() {
+  $.ajax({
+    url: userSearchURL,
+    method: "GET"
+  }).then(function(response) {
+    returnedValue1 = response.data[0].images.fixed_width.url;
+    returnedValue2 = response.data[1].images.fixed_width.url;
+    returnedValue3 = response.data[2].images.fixed_width.url;
+    returnedValue4 = response.data[3].images.fixed_width.url;
+    returnedValue5 = response.data[4].images.fixed_width.url;
+    returnedValue6 = response.data[5].images.fixed_width.url;
+    returnedValue7 = response.data[6].images.fixed_width.url;
+    returnedValue8 = response.data[7].images.fixed_width.url;
+    returnedValue9 = response.data[8].images.fixed_width.url;
+    $("#returned1").html("<img src='" + returnedValue1 + "'>");
+    $("#returned2").html("<img src='" + returnedValue2 + "'>");
+    $("#returned3").html("<img src='" + returnedValue3 + "'>");
+    $("#returned4").html("<img src='" + returnedValue4 + "'>");
+    $("#returned5").html("<img src='" + returnedValue5 + "'>");
+    $("#returned6").html("<img src='" + returnedValue6 + "'>");
+    $("#returned7").html("<img src='" + returnedValue7 + "'>");
+    $("#returned8").html("<img src='" + returnedValue8 + "'>");
+    $("#returned9").html("<img src='" + returnedValue9 + "'>");
+    })
+  }
+    
+// When the search button is clicked, capture value from input and apply to search URL
+$("#searchButton").on("click", function(event) {
+  event.preventDefault()
+
+  if (currentEntry === false) {
+    // don't do anything if there isn't a current entry selected
+    return false;
+  }
+  userSearch();
+  if (searchTerm == "") {
+    return false;
+  }
+  // Otherwise, bring up the modal
+  console.log(userSearchURL);
+  callAJAX();
+})
+
+// Last image slected by the user is equal to the variable userSelection
+$(".returnedPic").on("click", function() {
+  userSelection = $(this).find('img').prop('src');
+  console.log("User Selection: " + userSelection);
+  $(".returnedPic").removeClass("selectedImage");
+  $(this).addClass("selectedImage");
+})
+
+// On add image button, insert gif into text contet, use url from userSelection
+$("#addImageButton").on("click", function() {
+  var contentInfo = {}
+  contentInfo.type = "image";
+  contentInfo.content = userSelection;
+  
+  writeImage(contentInfo, entries[currentEntry].content.length)
+
+  entries[currentEntry].content.push(contentInfo)
+  localStorage.setItem("userEntries", JSON.stringify(entries))
+
+   $("#search-modal").modal('hide')
+})
+
+$(document).on("click", ".user-image", function () {
+  $("#deleteDividerModal").modal('show')
+  currentItem = $(this).attr("data-index")
+})
 })

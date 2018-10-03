@@ -93,3 +93,8 @@ h1 {
   border: 1px solid #555555;
   opacity: 0.5;
 }
+
+.selectedImage {
+  border: 5px solid;
+  border-color: red;
+}

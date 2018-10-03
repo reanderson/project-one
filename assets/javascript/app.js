@@ -264,6 +264,7 @@ $(document).ready(function () {
 
     $("#colorChangeSelect").val("Select New Font Color")
     $("#alignmentChangeSelect").val("Select Text Alignment")
+    $("#contentText").val("")
     $("#editTextModal").modal('hide')
     currentItem = false
   })
@@ -294,7 +295,7 @@ $(document).ready(function () {
     console.log(this)
     currentItem = ($(this).attr("data-index"))
 
-    $("#contentText").text($(this).text())
+    $("#contentText").val($(this).text())
   })
 
   $(document).on("click", ".entryDelete", function () {

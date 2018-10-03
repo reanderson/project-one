@@ -264,6 +264,7 @@ $(document).ready(function () {
 
     $("#colorChangeSelect").val("Select New Font Color")
     $("#alignmentChangeSelect").val("Select Text Alignment")
+    $("#contentText").val("")
     $("#editTextModal").modal('hide')
     currentItem = false
   })
@@ -294,7 +295,7 @@ $(document).ready(function () {
     console.log(this)
     currentItem = ($(this).attr("data-index"))
 
-    $("#contentText").text($(this).text())
+    $("#contentText").val($(this).text())
   })
 
   $(document).on("click", ".entryDelete", function () {
@@ -422,41 +423,32 @@ $(document).ready(function () {
   var ptro = Painterro({
     saveHandler: function (image, done) {
 
-      // var entryItem = {}
-      // entryItem.type = "sketch";
-      // entryItem.content = window.URL.createObjectURL(image.asBlob());
-      // console.log(image.asBlob())
-      // console.log(entryItem.content)
-
       var img = document.createElement("img")
       img.src = window.URL.createObjectURL(image.asBlob())
       img.onload = function () {
         window.URL.revokeObjectURL(this.src)
       }
       img.classList.add("img-fluid")
-      img.classList.add("contentSketch")
-      img.setAttribute("data-index", entries[currentEntry].content.length)
       console.log(img)
-
-      // // Add the object to the current entry's content array
-      // entries[currentEntry].content.push(entryItem)
-      // console.log(entries)
-      // console.log(JSON.stringify(entries))
-      // localStorage.setItem("userEntries", JSON.stringify(entries))
 
       $("#entryContent").append(img)
       done(true);
     }
   })
 
-  function myFunction() {
-    if (currentEntry === false) {
-      // don't do anything if there isn't a current entry selected
-      return false;
+  function openSketch() {
+    if (!(currentEntry === false)) {
+      // if there's an entry open, close  the entry (by clearing the entry display div) and set currentEntry to false
+      entryDisplayArea.empty()
+      currentEntry = false;
     }
     ptro.show();
 
   };
+
+  $("#callSketch").on("click", function() {
+    openSketch()
+  })
 
 
   //=========================================================================================

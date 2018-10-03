@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css">
-<link href="https://fonts.googleapis.com/css?family=Bad+Script|Comfortaa|Julius+Sans+One|Permanent+Marker" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Bad+Script|Comfortaa|Julius+Sans+One|Vollkorn" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 
 <title>Project One</title>
@@ -26,12 +26,18 @@
 
   
       
-    <nav class="navbar navbar-dark bg-dark">
-      <span class="navbar-text align-center">"Doing nothing is hard, you never know when you're done."
-      </span>
-      
-      
-    </nav>
+      <div class="bg-dark text-light p-3 shadow">
+        <div class="row justify-content-between align-items-center">
+          <div class="col col-10">
+  
+            <small class="mb-0" id="dailyquote"></small>
+  
+          </div>
+          <div class="col col-2 text-right">
+            <button type="button" id="newQuote" class="btn btn-secondary btn-sm">New quote</button>
+          </div>
+        </div>
+      </div>
 
   <br><br>
 
@@ -46,7 +52,7 @@
               </button>
               
             </div>
-            <ul class="list-group list-group-flush" id="entryButtons">
+            <ul class="list-group list-group-flush shadow" id="entryButtons">
               <li class="list-group-item">Cras justo odio</li>
               <li class="list-group-item">Dapibus ac facilisis in</li>
               <li class="list-group-item">Vestibulum at eros</li>
@@ -58,14 +64,14 @@
         
         <div class="col-md-8">
           <div class="card">
-            <div class="card-header">
-              <button type="button" class="btn btn-secondary" id="callNewTextModal">
+            <div class="card-header bg-secondary">
+              <button type="button" class="btn btn-outline-light shadow" id="callNewTextModal">
                 Add Text Content
               </button>
               
-              <button type-"button" class="btn btn-secondary" id="newDivider">Add Divider</button>
+              <button type-"button" class="btn btn-outline-light shadow" id="newDivider">Add Divider</button>
             </div>
-            <div class="card-body" id="entryContent">
+            <div class="card-body shadow" id="entryContent">
         </div>
    </div>
   </main>
@@ -290,29 +296,7 @@
   <!-- End Edit Title Modal -->
         
 <script src="assets/painterro-0.2.68/wp/tags/0.2.21.1/painterro-0.2.21.min.js"></script>
-<script>
-  function myFunction() {
-  Painterro().show();
-  
-};
-var ptro = Painterro({
-  saveHandler: function (image, done) {
-    var formData = new FormData();
-    formData.append('image', image.asBlob());
-    // you can also pass suggested filename 
-    // formData.append('image', image.asBlob(), image.suggestedFileName());
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://127.0.0.1:5500//save-as-binary/', true);
-    xhr.onload = xhr.onerror = function () {
-      done(true);
-    };
-    xhr.send(formData);
-  }
-})
-  function myFunction() {
-      ptro.show();
-    }
-</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/js/bootstrap.min.js"></script>
